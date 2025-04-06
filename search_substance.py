@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
-from patankar.loadpubchem import migrantToxtree
+from patankar.loadpubchem import migrantToxtree, migrant
 
 
 
@@ -155,11 +155,14 @@ compound_name = st.text_input("Substance name or CAS", value="BPA")
 if st.button("Search & Run ToxTree") and compound_name.strip():
     try:
         with st.spinner("Running ToxTree..."):
-            m = migrantToxtree(compound_name, verbose=False)
+            m = migrant(compound_name, verbose=False)
 
         st.success(f"✅ Substance loaded: {m.compound}")
+        mtox = m.promote()
+        if not isinstance(mtox, migrantToxtree):
+            st.warning("⚠️ No cached ToxTree data available. Toxicology section skipped.")
         st.divider()
-        display_migrant(m)
+        display_migrant(mtox)
 
     except Exception as e:
         st.error(f"❌ Error: {e}")

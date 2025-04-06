@@ -137,7 +137,7 @@ Version History
 """
 
 
-import os,io
+import os,io, shutil
 import subprocess
 import requests
 import json
@@ -205,6 +205,18 @@ _PATANKAR_FOLDER = os.path.dirname(__file__)
 # Enforcing rate limiting cap: https://www.ncbi.nlm.nih.gov/books/NBK25497/
 PubChem_MIN_DELAY = 1 / 3.0  # 1/3 second (333ms)
 PubChem_lastQueryTime = 0 # global variable
+
+def is_java_available():
+    """Returns True if java is installed"""
+    return shutil.which("java") is not None
+
+def get_java_version():
+    """Returns the java version"""
+    try:
+        result = subprocess.run(["java", "-version"], capture_output=True, text=True)
+        return result.stderr.splitlines()[0]  # Java prints version to stderr
+    except FileNotFoundError:
+        return None
 
 # utility to generate JSON compliant files (required for Pyodide)
 def safe_json_dump(obj, path, indent=4, **kwargs):
@@ -2772,6 +2784,8 @@ class migrantToxtree(migrant):
 
         # use Toxtree otherwise (it needs to be installed)
         if not os.path.isfile(csv_file) or self.no_cache:
+            if not is_java_available():
+                raise RuntimeError("Java must be installed to run ToxTree")
             if not os.path.isfile(self.jar_path):
                 raise FileNotFoundError(
                     f"The Toxtree executable '{self.jar_path}' cannot be found.\n"
