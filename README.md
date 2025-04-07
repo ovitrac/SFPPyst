@@ -9,7 +9,7 @@
 
 ---
 
-> 🍏⏩🍎 **SFPPy**: A Python Framework for Food Contact Compliance & Risk Assessment  
+> 🍏⏩🍎 ***SFPPy**: A Python Framework for Food Contact Compliance & Risk Assessment*  
 
 ### 🚀 SFPPy-St: Streamlit-powered SFPPy Tools
 
@@ -20,19 +20,22 @@
 - 🧾 Live PubChem queries (structure, synonyms, InChIKey, SMILES, etc.)
 - 💡 Designed to complement [**SFPPyLite**](https://github.com/ovitrac/SFPPylite) with full toxicological support (e.g. ToxTree)
 
+[![SFPPy_st App](https://img.shields.io/badge/SFPPy_st-Search%20Substance-4CAF50?logo=streamlit&logoColor=white)](https://sfppyst.streamlit.app/) (*click the badge to launch the app.)*
+
 ---
 
 ### 🎯 Key Differences from SFPPyLite
 
-| Feature             | **SFPPy-St (Streamlit)**                              | **SFPPyLite (JupyterLite)**       |
-| ------------------- | ----------------------------------------------------- | --------------------------------- |
-| **Execution**       | Server-side Python (full `migrantToxtree` support)    | In-browser Python (Pyodide/WASM)  |
-| **ToxTree Support** | ✅ Full support for Cramer classification, alerts, TTC | ❌ Not supported (Java dependency) |
-| **Interactivity**   | GUI forms, dropdowns, live search                     | Jupyter notebook UI               |
-| **Performance**     | Native Python speed                                   | ~2x slower (WebAssembly overhead) |
-| **Persistence**     | Server-managed or user-local                          | In-browser (IndexedDB)            |
-| **Deployable**      | Yes (locally or on a web server)                      | Yes (static website)              |
-| **Mobile ready**    | ✅ (Streamlit is responsive)                           | ✅ (Lite runs in-browser)          |
+| Feature             | **SFPPy-St (Streamlit)**                                     | **SFPPyLite (JupyterLite)**                                  |
+| ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **PubChem Support** | Server-side Python with full `loadpubchem` support for not documented substances | In-browser Python (Pyodide/WASM), `loadpubchem` cannot cache new substances |
+| **ToxTree Support** | ✅ Full support for Cramer classification, alerts, TTC if installed locally. <br />⚠️ Support for cached substances only with the on line server (no JVM on Streamlit servers). | ⚠️ Support for cached substances (Java dependency)            |
+| **Interactivity**   | GUI forms, dropdowns, live search                            | Jupyter notebook UI                                          |
+| **Performance**     | Native Python speed                                          | ~2x slower (WebAssembly overhead)                            |
+| **Persistence**     | ✅ if user-local, ❌ with Streamlit                            | In-browser (IndexedDB) with 📥📤                               |
+| **Deployable**      | Yes (locally or on a web server)                             | Yes (static website)                                         |
+| **Mobile ready**    | ✅ (Streamlit is responsive)                                  | ✅ (Lite runs in-browser)                                     |
+| **Launching time**  | <5 s if user-local, < 2 min with Streamlit                   | <10 s                                                        |
 
 ---
 
